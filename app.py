@@ -4,7 +4,7 @@ from models import *
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 app.config['JSON_AS_UTF-8'] = True
-app.secret_key = 'c57cdbfc93ccfc4a573c7c372c2c4ece948392a143a669c57301196c6e23054d'  # key for session
+app.secret_key = 'YOUR_KEY'  # key for session
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///establishments.db'  # база данных: общая информация по заведениям
 app.config['SQLALCHEMY_BINDS'] = {
     'establishments_full_info': 'sqlite:///establishments_full_info.db',  # база данных: Полная информация по заведениям
@@ -21,7 +21,7 @@ class RestList(Resource):
     def get(self):
         # создает JSON список с ресторанами путем обращения к бд establishments.db
         establishments = Establishments.query.all()  # все заведения из бд
-        data = {"establishments": []}  # оздание словоря
+        data = {"establishments": []}  # создание словоря
         for establishment in establishments:  # заполнение словаря заведенями
             data["establishments"].append({
                 "id": establishment.id,
@@ -191,13 +191,4 @@ api.add_resource(UsersRegister, "/register")
 api.init_app(app)
 
 if __name__ == "__main__":
-    app.run(debug=True, port=80, host="127.0.0.1")
-    data1 = {
-        "data": [30, 31],
-        30: [0, 1, 2, 3, 4, 5, 6, 7, 21, 22, 23],
-        31: [0, 1, 2, 3, 4, 5, 6, 7, 21, 22, 23]
-    }
-
-    #el = Establishments_full_info(id=4, name= "Point 188", address="ул. Греческая , 22", url_preview_img="https://i.imgur.com/MaiALjI.png", url="https://www.point188tag.com/", description="Кафе хорошо освещено, может порадовать большим ассортиментом пицц.\nКомфортное место работы.\nТакже подходит для семей", prices={0: ("Кофе", 100), 1: ("Печеньки", 250)}, booking=data1,wifi=1,battery=1,silence=1,cashless_payment=1,time_work="Вт-Чт: 09:00 - 00:00\nПт-Сб: 09:00 - 01:00")
-    #db.session.add(el)
-    #db.session.commit()
+    app.run(debug=False, port=80, host="127.0.0.1")
